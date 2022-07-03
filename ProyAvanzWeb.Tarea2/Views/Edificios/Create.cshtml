@@ -1,0 +1,90 @@
+﻿@model ProyAvanzWeb.Tarea2.Models.Edificio
+
+@{
+    ViewData["Title"] = "Agregar un edificio";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreEdificio" class="control-label"></label>
+                <input asp-for="NombreEdificio" class="form-control" />
+                <span asp-validation-for="NombreEdificio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacidad" class="control-label"></label>
+                <input asp-for="Capacidad" class="form-control" />
+                <span asp-validation-for="Capacidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCompra" class="control-label"></label>
+                <input asp-for="FechaCompra" class="form-control" />
+                <span asp-validation-for="FechaCompra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdProvincia" class="control-label"></label><br />
+                @Html.DropDownList("IdProvincia", (IEnumerable<SelectListItem>)ViewData["Provincias"])
+                <span asp-validation-for="IdProvincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCanton" class="control-label"></label>
+                 @Html.DropDownList("IdCanton", new SelectList(string.Empty, "Value", "Text"), "Seleccionar un cantón", new { @class="form-control" })
+                <span asp-validation-for="IdCanton" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDistrito" class="control-label"></label>
+                <input asp-for="IdDistrito" class="form-control" />
+                <span asp-validation-for="IdDistrito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTipoPropiedad" class="control-label"></label>
+                <input asp-for="IdTipoPropiedad" class="form-control" />
+                <span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaFinalContrato" class="control-label"></label>
+                <input asp-for="FechaFinalContrato" class="form-control" />
+                <span asp-validation-for="FechaFinalContrato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+<script>
+jQuery(document).ready(function ($){
+    $('#IdProvincia').change(function(){
+        var id = $(this).find(":selected").val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetCantones", "Edificios")',
+            data: {id: parseInt(id) },
+            contentType: 'application/json; charset-utf-8',
+            success: function(data) {
+$('#IdCanton').empty();
+                var ddl = $('#IdCanton');
+                $.each(data, function(id, option){
+                    $('#IdCanton').append($('<option></option>').val(option.value).html(option.text));
+                });
+            }
+        });
+    });
+});
+</script>
+}
+

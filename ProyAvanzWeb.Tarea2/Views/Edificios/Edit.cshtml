@@ -1,0 +1,74 @@
+﻿@model ProyAvanzWeb.Tarea2.Models.Edificio
+
+@{
+    ViewData["Title"] = "Modificar un edificio";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Edificio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="NombreEdificio" class="control-label"></label>
+                <input asp-for="NombreEdificio" class="form-control" />
+                <span asp-validation-for="NombreEdificio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacidad" class="control-label"></label>
+                <input asp-for="Capacidad" class="form-control" />
+                <span asp-validation-for="Capacidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCompra" class="control-label"></label>
+                <input asp-for="FechaCompra" class="form-control" />
+                <span asp-validation-for="FechaCompra" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdProvincia" class="control-label"></label>
+                <input asp-for="IdProvincia" class="form-control" />
+                <span asp-validation-for="IdProvincia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdCanton" class="control-label"></label>
+                <input asp-for="IdCanton" class="form-control" />
+                <span asp-validation-for="IdCanton" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDistrito" class="control-label"></label>
+                <input asp-for="IdDistrito" class="form-control" />
+                <span asp-validation-for="IdDistrito" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTipoPropiedad" class="control-label"></label>
+                <input asp-for="IdTipoPropiedad" class="form-control" />
+                <span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaFinalContrato" class="control-label"></label>
+                <input asp-for="FechaFinalContrato" class="form-control" />
+                <span asp-validation-for="FechaFinalContrato" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Modificar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
