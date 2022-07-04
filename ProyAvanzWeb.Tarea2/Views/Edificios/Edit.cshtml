@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Modificar un edificio";
 }
+<div class="container">
+<h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
+</div>
 
-<h1>@ViewData["Title"]</h1>
-
-<h4>Edificio</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -30,22 +30,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdProvincia" class="control-label"></label>
-                <input asp-for="IdProvincia" class="form-control" />
+                 @Html.DropDownList("IdProvincia", (IEnumerable<SelectListItem>)ViewData["Provincias"], "Seleccionar una provincia", new {@class = "form-control"})
                 <span asp-validation-for="IdProvincia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdCanton" class="control-label"></label>
-                <input asp-for="IdCanton" class="form-control" />
+                @Html.DropDownList("IdCanton", new SelectList(string.Empty, "Value", "Text"), "Seleccionar un cantón", new { @class="form-control" })
                 <span asp-validation-for="IdCanton" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdDistrito" class="control-label"></label>
-                <input asp-for="IdDistrito" class="form-control" />
+                @Html.DropDownList("IdDistrito", new SelectList(string.Empty, "Value", "Text"), "Seleccionar un distrito", new { @class="form-control" })
                 <span asp-validation-for="IdDistrito" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdTipoPropiedad" class="control-label"></label>
-                <input asp-for="IdTipoPropiedad" class="form-control" />
+                <select name="IdTipoPropiedad" id="IdTipoPropiedad" class="form-control">
+                    <option value="0">Seleccionar un tipo de propiedad</option>
+                    <option value="1">Adquirido</option>
+                    <option value="2">Alquilado</option>
+                </select>
                 <span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -53,11 +57,12 @@
                 <input asp-for="FechaFinalContrato" class="form-control" />
                 <span asp-validation-for="FechaFinalContrato" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Estado" /> @Html.DisplayNameFor(model => model.Estado)
-                </label>
-            </div>
+            <br />
+            <div class="form-check">
+                @Html.DisplayNameFor(model => model.Estado)
+                @Html.CheckBoxFor(model => model.Estado)
+                </div>
+            <br/>
             <div class="form-group">
                 <input type="submit" value="Modificar" class="btn btn-primary" />
             </div>
@@ -71,4 +76,68 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+<script>
+jQuery(document).ready(function ($){
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    $('#FechaFinalContrato').attr('disabled', true);
+    $('#IdTipoPropiedad').val(@Model.IdTipoPropiedad);
+
+    $('#IdProvincia').change(function(){
+        var id = $(this).find(":selected").val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetCantones", "Direccion")',
+            data: {id: parseInt(id) },
+            contentType: 'application/json; charset-utf-8',
+            success: function(data) {
+            $('#IdCanton').empty();
+            $('#IdDistrito').empty();
+                $.each(data, function(id, option){
+                    $('#IdCanton').append($('<option></option>').val(option.value).html(option.text));
+                });
+                 $('#IdCanton').change();
+            }
+        });
+    });
+
+    $('#IdCanton').change(function(){
+        var id = $(this).find(":selected").val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetDistritos", "Direccion")',
+            data: {id: parseInt(id) },
+            contentType: 'application/json; charset-utf-8',
+            success: function(data) {
+            $('#IdDistrito').empty();
+                $.each(data, function(id, option){
+                    $('#IdDistrito').append($('<option></option>').val(option.value).html(option.text));
+                });
+            }
+        });
+    });
+
+    $('#IdTipoPropiedad').change(function(){
+        var desc = $(this).find(":selected").text();
+        if (desc==='Alquilado'){
+            $('#FechaFinalContrato').removeAttr('disabled');
+        }
+        else{
+            $('#FechaFinalContrato').attr('disabled', true);
+        }
+    });
+
+        $('#IdProvincia').change();
+        $('#IdCanton').change();
+        $('#IdTipoPropiedad').change();
+        
+});
+</script>
 }

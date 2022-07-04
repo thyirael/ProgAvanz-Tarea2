@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Eliminar edificio";
 }
-
-<h1>@ViewData["Title"]</h1>
-
+<div class="container">
+<h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
+</div>
 <h3>¿Está seguro de eliminar el registro?</h3>
 <div>
     <h4>Edificio</h4>
@@ -30,28 +30,28 @@
             @Html.DisplayFor(model => model.FechaCompra)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdProvincia)
+            @Html.DisplayNameFor(model => model.NombreProvincia)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdProvincia)
+            @Html.DisplayFor(model => model.NombreProvincia)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCanton)
+            @Html.DisplayNameFor(model => model.NombreCanton)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCanton)
+            @Html.DisplayFor(model => model.NombreCanton)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdDistrito)
+            @Html.DisplayNameFor(model => model.NombreDistrito)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdDistrito)
+            @Html.DisplayFor(model => model.NombreDistrito)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTipoPropiedad)
+            @Html.DisplayNameFor(model => model.NombreTipoPropiedad)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTipoPropiedad)
+            @Html.DisplayFor(model => model.NombreTipoPropiedad)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.FechaFinalContrato)
@@ -63,13 +63,19 @@
             @Html.DisplayNameFor(model => model.Estado)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
+            @{
+                if (Model.Estado) {
+                    <p>Activo</p>
+                    } else {
+                    <p>Inactivo</p>
+                    }
+            }
         </dd>
     </dl>
-    
+    <br />
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> <br />
         <a asp-action="Index">Regresar al listado</a>
     </form>
 </div>

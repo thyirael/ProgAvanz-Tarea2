@@ -42,7 +42,10 @@ namespace ProyAvanzWeb.Tarea2.Controllers
         {
             Edificio ed = new Edificio();
 
-            ViewData["Provincias"] = getProvincias();
+            using (DireccionController c = new DireccionController(_configuration))
+            {
+                ViewData["Provincias"] = c.getProvincias();
+            }
 
             return View(ed);
         }
@@ -69,7 +72,7 @@ namespace ProyAvanzWeb.Tarea2.Controllers
                     sqlCmd.Parameters.AddWithValue("idCanton", edificio.IdCanton);
                     sqlCmd.Parameters.AddWithValue("idDistrito", edificio.IdDistrito);
                     sqlCmd.Parameters.AddWithValue("idTipoPropiedad", edificio.IdTipoPropiedad);
-                    sqlCmd.Parameters.AddWithValue("fechaFinalContrato", edificio.FechaFinalContrato);
+                    sqlCmd.Parameters.AddWithValue("fechaFinalContrato", string.IsNullOrEmpty(edificio.FechaFinalContrato.ToString())? DateTime.Parse("01/01/1900"): edificio.FechaFinalContrato);
                     sqlCmd.Parameters.AddWithValue("estado", 1);
                     sqlCmd.Parameters.AddWithValue("salida", 0);
                     sqlCmd.ExecuteNonQuery();
@@ -85,6 +88,11 @@ namespace ProyAvanzWeb.Tarea2.Controllers
         public IActionResult Edit(int? id)
         {
             Edificio edificio = new Edificio();
+
+            using (DireccionController c = new DireccionController(_configuration))
+            {
+                ViewData["Provincias"] = c.getProvincias();
+            }
 
             if (id > 0)
             {
@@ -174,9 +182,13 @@ namespace ProyAvanzWeb.Tarea2.Controllers
                     edf.Capacidad = Convert.ToInt32(row["Capacidad"]);
                     edf.FechaCompra = Convert.ToDateTime(row["FechaCompra"]);
                     edf.IdProvincia = Convert.ToInt32(row["IdProvincia"]);
+                    edf.NombreProvincia = row["NombreProvincia"].ToString();
                     edf.IdCanton = Convert.ToInt32(row["IdCanton"]);
+                    edf.NombreCanton = row["NombreCanton"].ToString();
                     edf.IdDistrito = Convert.ToInt32(row["IdDistrito"]);
+                    edf.NombreDistrito = row["NombreDistrito"].ToString();
                     edf.IdTipoPropiedad = Convert.ToInt32(row["IdTipoPropiedad"]);
+                    edf.NombreTipoPropiedad = row["NombreTipoPropiedad"].ToString();
                     edf.FechaFinalContrato = Convert.ToDateTime(row["FechaFinalContrato"]);
                     edf.Estado = Convert.ToBoolean(row["Estado"]);
                 }
@@ -185,59 +197,6 @@ namespace ProyAvanzWeb.Tarea2.Controllers
             return edf;
         }
 
-        internal List<SelectListItem> getProvincias()
-        {
-            List<SelectListItem> tmpProvs = new List<SelectListItem>();
-
-            using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("SqlConnection")))
-            {
-                DataTable tmpTable = new DataTable();
-                sqlConnection.Open();
-                SqlDataAdapter sqlAdapter = new SqlDataAdapter("usp_provincia_listar", sqlConnection);
-                sqlAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-                sqlAdapter.SelectCommand.Parameters.AddWithValue("salida", 0);
-                sqlAdapter.Fill(tmpTable);
-
-                foreach (DataRow row in tmpTable.Rows)
-                {
-                    tmpProvs.Add(
-                        new SelectListItem()
-                        {
-                            Text = row["Nombre"].ToString(),
-                            Value = row["Id"].ToString()
-                        }
-                    );
-                }
-            }
-            return tmpProvs;
-        }
-
-        public IActionResult GetCantones(int id)
-        {
-            List<SelectListItem> tmpCantones = new List<SelectListItem>();
-
-            using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("SqlConnection")))
-            {
-                DataTable tmpTable = new DataTable();
-                sqlConnection.Open();
-                SqlDataAdapter sqlAdapter = new SqlDataAdapter("usp_canton_obtener", sqlConnection);
-                sqlAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-                sqlAdapter.SelectCommand.Parameters.AddWithValue("id", id);
-                sqlAdapter.SelectCommand.Parameters.AddWithValue("salida", 0);
-                sqlAdapter.Fill(tmpTable);
-
-                foreach (DataRow row in tmpTable.Rows)
-                {
-                    tmpCantones.Add(
-                        new SelectListItem()
-                        {
-                            Text = row["Nombre"].ToString(),
-                            Value = row["Id"].ToString()
-                        }
-                    );
-                }
-            }
-            return new OkObjectResult(tmpCantones);
-        }
+        
     }
 }

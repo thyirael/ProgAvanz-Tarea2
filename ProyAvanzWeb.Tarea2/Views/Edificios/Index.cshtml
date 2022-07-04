@@ -36,6 +36,9 @@
                 Fecha fin de contrato
             </th>
             <th>
+                Estado
+            </th>
+            <th>
                 <a asp-action="Create">Agregar</a>
             </th>
         </tr>
@@ -43,7 +46,7 @@
     <tbody>
         @for (var i = 0; i < Model.Rows.Count; i++)
         {
-                <tr>
+            <tr>
                 <td>
                     @Model.Rows[i]["NombreEdificio"]
                 </td>
@@ -51,22 +54,33 @@
                     @Model.Rows[i]["Capacidad"]
                 </td>
                 <td>
-                    @Model.Rows[i]["FechaCompra"]
+                     @Convert.ToDateTime(@Model.Rows[i]["FechaCompra"]).ToShortDateString()
+                    
                 </td>
                 <td>
-                    @Model.Rows[i]["IdProvincia"]
+                    @Model.Rows[i]["NombreProvincia"]
                 </td>
                 <td>
-                    @Model.Rows[i]["IdCanton"]
+                    @Model.Rows[i]["NombreCanton"]
                 </td>
                 <td>
-                    @Model.Rows[i]["IdDistrito"]
+                    @Model.Rows[i]["NombreDistrito"]
                 </td>
                 <td>
-                    @Model.Rows[i]["IdTipoPropiedad"]
+                    @Model.Rows[i]["NombreTipoPropiedad"]
                 </td>
                 <td>
-                    @Model.Rows[i]["FechaFinalContrato"]
+                    @Convert.ToDateTime(@Model.Rows[i]["FechaFinalContrato"]).ToShortDateString()
+                </td>
+                <td>
+                    @{
+                        if ((bool)@Model.Rows[i]["Estado"]) {
+                                        <p>Activo</p>
+                        } else {
+                                        <p>Inactivo</p>
+                        }
+                     }
+                    
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@Model.Rows[i]["Id"]">Modificar</a> |

@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Agregar un edificio";
 }
-
-<h1>@ViewData["Title"]</h1>
-
+<div class="container">
+<h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
+</div>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -28,7 +28,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdProvincia" class="control-label"></label><br />
-                @Html.DropDownList("IdProvincia", (IEnumerable<SelectListItem>)ViewData["Provincias"])
+
+                @Html.DropDownList("IdProvincia", (IEnumerable<SelectListItem>)ViewData["Provincias"], "Seleccionar una provincia", new {@class = "form-control"})
                 <span asp-validation-for="IdProvincia" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,12 +39,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdDistrito" class="control-label"></label>
-                <input asp-for="IdDistrito" class="form-control" />
+                @Html.DropDownList("IdDistrito", new SelectList(string.Empty, "Value", "Text"), "Seleccionar un distrito", new { @class="form-control" })
                 <span asp-validation-for="IdDistrito" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdTipoPropiedad" class="control-label"></label>
-                <input asp-for="IdTipoPropiedad" class="form-control" />
+                <label asp-for="IdTipoPropiedad" class="control-label"></label><br />
+                <select name="IdTipoPropiedad" id="IdTipoPropiedad" class="form-control">
+                    <option value="0" selected>Seleccionar un tipo de propiedad</option>
+                    <option value="1">Adquirido</option>
+                    <option value="2">Alquilado</option>
+                </select>
                 <span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -68,21 +73,61 @@
 
 <script>
 jQuery(document).ready(function ($){
+    var now = new Date();
+
+var day = ("0" + now.getDate()).slice(-2);
+var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+$('#FechaFinalContrato').val(today);
+$('#FechaCompra').val(today);
+
+    $('#FechaFinalContrato').attr('disabled', true);
+    
+
     $('#IdProvincia').change(function(){
         var id = $(this).find(":selected").val();
         $.ajax({
             type: 'GET',
-            url: '@Url.Action("GetCantones", "Edificios")',
+            url: '@Url.Action("GetCantones", "Direccion")',
             data: {id: parseInt(id) },
             contentType: 'application/json; charset-utf-8',
             success: function(data) {
-$('#IdCanton').empty();
-                var ddl = $('#IdCanton');
+            $('#IdCanton').empty();
+            $('#IdDistrito').empty();
                 $.each(data, function(id, option){
                     $('#IdCanton').append($('<option></option>').val(option.value).html(option.text));
                 });
+                 $('#IdCanton').change();
             }
         });
+    });
+
+    $('#IdCanton').change(function(){
+        var id = $(this).find(":selected").val();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetDistritos", "Direccion")',
+            data: {id: parseInt(id) },
+            contentType: 'application/json; charset-utf-8',
+            success: function(data) {
+            $('#IdDistrito').empty();
+                $.each(data, function(id, option){
+                    $('#IdDistrito').append($('<option></option>').val(option.value).html(option.text));
+                });
+            }
+        });
+    });
+
+    $('#IdTipoPropiedad').change(function(){
+        var desc = $(this).find(":selected").text();
+        if (desc==='Alquilado'){
+            $('#FechaFinalContrato').removeAttr('disabled');
+        }
+        else{
+            $('#FechaFinalContrato').attr('disabled', true);
+        }
     });
 });
 </script>
