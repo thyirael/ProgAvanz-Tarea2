@@ -1,0 +1,68 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewData["Title"] = "Listado de servicios";
+}
+
+<div class="container">
+<h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
+</div>
+
+<table class="table table-bordered">
+    <thead class="bg-info">
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Tipo de servicio
+            </th>
+            <th>
+                Unidad de medida
+            </th>
+            <th>
+                Empresa
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                <a asp-action="Create">Agregar</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Rows.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Model.Rows[i]["NombreServicio"]
+                </td>
+                <td>
+                    @Model.Rows[i]["NombreTipoServicio"]
+                </td>
+                <td>
+                    @Model.Rows[i]["NombreUnidadMedida"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Empresa"]
+                </td>
+                <td>
+                    @{
+                        if ((bool)@Model.Rows[i]["Estado"]) {
+                                        <p>Activo</p>
+                        } else {
+                                        <p>Inactivo</p>
+                        }
+                     }
+                    
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@Model.Rows[i]["Id"]">Modificar</a> |
+                    <a asp-action="Delete" asp-route-id="@Model.Rows[i]["Id"]">Eliminar</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
