@@ -18,7 +18,6 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdTipoServicio" class="control-label"></label><br />
-
                 @Html.DropDownList("IdTipoServicio", (IEnumerable<SelectListItem>)ViewData["TipoServicios"], "Seleccionar un tipo de servicio", new {@class = "form-control"})
                 <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
             </div>
