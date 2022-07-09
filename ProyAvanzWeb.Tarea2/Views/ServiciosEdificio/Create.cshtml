@@ -1,0 +1,74 @@
+﻿@model ProyAvanzWeb.Tarea2.Models.ServiciosXEdificio
+
+@{
+    ViewData["Title"] = "Asignar servicios a un edificio";
+}
+<div class="container">
+<h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdEdificio" class="control-label"></label><br />
+
+                @Html.DropDownList("IdEdificio", (IEnumerable<SelectListItem>)ViewData["Edificios"], "Seleccionar un edificio", new {@class = "form-control"})
+                <span asp-validation-for="IdEdificio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdServicio" class="control-label"></label><br />
+
+                @Html.DropDownList("IdServicio", (IEnumerable<SelectListItem>)ViewData["Servicios"], "Seleccionar un servicio", new {@class = "form-control"})
+                <span asp-validation-for="IdServicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCorte" class="control-label"></label>
+                <input asp-for="FechaCorte" class="form-control" />
+                <span asp-validation-for="FechaCorte" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consumo" class="control-label"></label>
+                <input asp-for="Consumo" class="form-control" />
+                <span asp-validation-for="Consumo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+<script>
+jQuery(document).ready(function ($){
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    $('#FechaCorte').val(today);
+   
+    $('#IdEdificio').change(function(){
+        var id = $(this).find(":selected").val();
+        console.log(id);
+    });
+    
+    $('#IdServicio').change(function(){
+        var id = $(this).find(":selected").val();
+        console.log(id);
+    });
+});
+</script>
+}
+

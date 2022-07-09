@@ -1,0 +1,49 @@
+﻿@model ProyAvanzWeb.Tarea2.Models.Servicio
+
+@{
+    ViewData["Title"] = "Agregar un servicio";
+}
+<div class="container">
+<h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" autocomplete="off">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreServicio" class="control-label"></label>
+                <input asp-for="NombreServicio" class="form-control" />
+                <span asp-validation-for="NombreServicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTipoServicio" class="control-label"></label><br />
+                @Html.DropDownList("IdTipoServicio", (IEnumerable<SelectListItem>)ViewData["TipoServicios"], "Seleccionar un tipo de servicio", new {@class = "form-control"})
+                <span asp-validation-for="IdTipoServicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdUnidadMedida" class="control-label"></label><br />
+                @Html.DropDownList("IdUnidadMedida", (IEnumerable<SelectListItem>)ViewData["Unidades"], "Seleccionar una unidad de medida", new {@class = "form-control"})
+                <span asp-validation-for="IdUnidadMedida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Empresa" class="control-label"></label>
+                <input asp-for="Empresa" class="form-control" />
+                <span asp-validation-for="Empresa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
+

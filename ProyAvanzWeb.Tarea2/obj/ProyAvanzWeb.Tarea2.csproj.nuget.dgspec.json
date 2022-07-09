@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj": {}
+    "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProgAvanz-Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj": {}
   },
   "projects": {
-    "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj": {
+    "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProgAvanz-Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj",
+        "projectUniqueName": "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProgAvanz-Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj",
         "projectName": "ProyAvanzWeb.Tarea2",
-        "projectPath": "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj",
+        "projectPath": "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProgAvanz-Tarea2\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2.csproj",
         "packagesPath": "C:\\Users\\aanar\\.nuget\\packages\\",
-        "outputPath": "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProyAvanzWeb.Tarea2\\obj\\",
+        "outputPath": "D:\\UNED\\Licenciatura\\II Cuatrimestre 2022\\[3101] - Programación avanzada en web\\Tarea2\\DEV\\Site\\ProyAvanzWeb.Tarea2\\ProgAvanz-Tarea2\\ProyAvanzWeb.Tarea2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\aanar\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -57,6 +57,10 @@
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.3, )"
+            },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[5.1.3, )"
             }
           },
           "imports": [

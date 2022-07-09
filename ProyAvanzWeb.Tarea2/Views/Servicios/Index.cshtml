@@ -1,7 +1,7 @@
 ﻿@model System.Data.DataTable
 
 @{
-    ViewData["Title"] = "Listado de edificios";
+    ViewData["Title"] = "Listado de servicios";
 }
 
 <div class="container">
@@ -15,25 +15,13 @@
                 Nombre
             </th>
             <th>
-                Capacidad
+                Tipo de servicio
             </th>
             <th>
-                Fecha de compra
+                Unidad de medida
             </th>
             <th>
-                Provincia
-            </th>
-            <th>
-                Cantón
-            </th>
-            <th>
-                Distrito
-            </th>
-            <th>
-                Tipo de propiedad
-            </th>
-            <th>
-                Fecha fin de contrato
+                Empresa
             </th>
             <th>
                 Estado
@@ -48,29 +36,16 @@
         {
             <tr>
                 <td>
-                    @Model.Rows[i]["NombreEdificio"]
+                    @Model.Rows[i]["NombreServicio"]
                 </td>
                 <td>
-                    @Model.Rows[i]["Capacidad"]
+                    @Model.Rows[i]["NombreTipoServicio"]
                 </td>
                 <td>
-                     @Convert.ToDateTime(@Model.Rows[i]["FechaCompra"]).ToShortDateString()
-                    
+                    @Model.Rows[i]["NombreUnidadMedida"]
                 </td>
                 <td>
-                    @Model.Rows[i]["NombreProvincia"]
-                </td>
-                <td>
-                    @Model.Rows[i]["NombreCanton"]
-                </td>
-                <td>
-                    @Model.Rows[i]["NombreDistrito"]
-                </td>
-                <td>
-                    @Model.Rows[i]["NombreTipoPropiedad"]
-                </td>
-                <td>
-                    @Convert.ToDateTime(@Model.Rows[i]["FechaFinalContrato"]).ToShortDateString()
+                    @Model.Rows[i]["Empresa"]
                 </td>
                 <td>
                     @{
