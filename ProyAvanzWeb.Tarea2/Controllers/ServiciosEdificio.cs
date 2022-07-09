@@ -56,6 +56,10 @@ namespace ProyAvanzWeb.Tarea2.Controllers
         {
             if (ModelState.IsValid)
             {
+                var res = 0;
+                ViewData["Edificios"] = getEdificios();
+                ViewData["Servicios"] = getServicios();
+
                 using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("SqlConnection")))
                 {
                     sqlConnection.Open();
@@ -66,14 +70,112 @@ namespace ProyAvanzWeb.Tarea2.Controllers
                     sqlCmd.Parameters.AddWithValue("idServicio", serviciosEdificio.IdServicio);
                     sqlCmd.Parameters.AddWithValue("FechaCorte", serviciosEdificio.FechaCorte);
                     sqlCmd.Parameters.AddWithValue("Consumo", serviciosEdificio.Consumo);
-                    sqlCmd.Parameters.AddWithValue("salida", 0);
+
+                    sqlCmd.Parameters.Add("salida", SqlDbType.Int);
+                    sqlCmd.Parameters["salida"].Direction = ParameterDirection.Output;
+
                     sqlCmd.ExecuteNonQuery();
+
+                    res = Convert.ToInt32(sqlCmd.Parameters["salida"].Value);
                 }
 
-                return RedirectToAction(nameof(Index));
+                if (res == -1)
+                {
+                    ViewBag.errorMessage = "El servicio ya se encuentra registrado para el edificio";
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             return View(serviciosEdificio);
+        }
+
+        // GET: ServiciosEdificio/Edit/5
+        public IActionResult Edit(int? id)
+        {
+            ServiciosXEdificio srved = new ServiciosXEdificio();
+
+            ViewData["Edificios"] = getEdificios();
+            ViewData["Servicios"] = getServicios();
+
+            if (id > 0)
+            {
+                srved = getServiciosXEdificioById(id);
+            }
+
+            return View(srved);
+        }
+
+        // POST: ServiciosEdificio/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("Id,IdEdificio,IdServicio,FechaCorte,Consumo")] ServiciosXEdificio serviciosEdificio)
+        {
+            if (ModelState.IsValid)
+            {
+                var res = 0;
+                ViewData["Edificios"] = getEdificios();
+                ViewData["Servicios"] = getServicios();
+
+                using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("SqlConnection")))
+                {
+
+                    sqlConnection.Open();
+                    SqlCommand sqlCmd = new SqlCommand("usp_serviciosxedificio_guardar", sqlConnection);
+                    sqlCmd.CommandType = CommandType.StoredProcedure;
+                    sqlCmd.Parameters.AddWithValue("id", serviciosEdificio.Id);
+                    sqlCmd.Parameters.AddWithValue("idEdificio", serviciosEdificio.IdEdificio);
+                    sqlCmd.Parameters.AddWithValue("idServicio", serviciosEdificio.IdServicio);
+                    sqlCmd.Parameters.AddWithValue("fechaCorte", serviciosEdificio.FechaCorte);
+                    sqlCmd.Parameters.AddWithValue("consumo", serviciosEdificio.Consumo);
+
+                    sqlCmd.Parameters.Add("salida", SqlDbType.Int);
+                    sqlCmd.Parameters["salida"].Direction = ParameterDirection.Output;
+                    
+                    sqlCmd.ExecuteNonQuery();
+
+                    res = Convert.ToInt32(sqlCmd.Parameters["salida"].Value);
+                }
+
+                if (res==-1)
+                {
+                    ViewBag.errorMessage = "El servicio ya se encuentra registrado para el edificio";
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(serviciosEdificio);
+        }
+
+        // GET: ServiciosEdificio/Delete/5
+        public IActionResult Delete(int? id)
+        {
+            ServiciosXEdificio srved = getServiciosXEdificioById(id);
+
+            return View(srved);
+        }
+
+        // POST: ServiciosEdificio/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("SqlConnection")))
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCmd = new SqlCommand("usp_serviciosxedificio_eliminar", sqlConnection);
+                sqlCmd.CommandType = CommandType.StoredProcedure;
+                sqlCmd.Parameters.AddWithValue("id", id);
+                sqlCmd.Parameters.AddWithValue("salida", 0);
+                sqlCmd.ExecuteNonQuery();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // LIST EDIFICIOS
@@ -130,6 +232,35 @@ namespace ProyAvanzWeb.Tarea2.Controllers
                 }
             }
             return tmpServicios;
+        }
+
+        internal ServiciosXEdificio getServiciosXEdificioById(int? id)
+        {
+            ServiciosXEdificio srvEd = new ServiciosXEdificio();
+
+            using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("SqlConnection")))
+            {
+                DataTable tmpTable = new DataTable();
+                sqlConnection.Open();
+                SqlDataAdapter sqlAdapter = new SqlDataAdapter("usp_serviciosxedificio_obtener", sqlConnection);
+                sqlAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                sqlAdapter.SelectCommand.Parameters.AddWithValue("id", id);
+                sqlAdapter.SelectCommand.Parameters.AddWithValue("salida", 0);
+                sqlAdapter.Fill(tmpTable);
+
+                foreach (DataRow row in tmpTable.Rows)
+                {
+                    srvEd.Id = Convert.ToInt32(row["Id"]);
+                    srvEd.IdEdificio = Convert.ToInt32(row["IdEdificio"]);
+                    srvEd.NombreEdificio = row["NombreEdificio"].ToString();
+                    srvEd.IdServicio = Convert.ToInt32(row["IdServicio"]);
+                    srvEd.NombreServicio = row["NombreServicio"].ToString();
+                    srvEd.FechaCorte = Convert.ToDateTime(row["FechaCorte"]);
+                    srvEd.Consumo = Convert.ToDecimal(row["Consumo"]);
+                }
+            }
+
+            return srvEd;
         }
     }
 }
