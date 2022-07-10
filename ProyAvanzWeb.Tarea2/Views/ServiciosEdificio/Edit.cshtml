@@ -1,7 +1,7 @@
 ﻿@model ProyAvanzWeb.Tarea2.Models.ServiciosXEdificio
 
 @{
-    ViewData["Title"] = "Asignar servicios a un edificio";
+    ViewData["Title"] = "Modificar servicios de un edificio";
     string errorMessage = "";
 
     if (ViewBag.errorMessage != null)
@@ -12,10 +12,11 @@
 <div class="container">
 <h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
 </div>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" autocomplete="off">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdEdificio" class="control-label"></label><br />
@@ -39,12 +40,15 @@
                 <input asp-for="Consumo" class="form-control" />
                 <span asp-validation-for="Consumo" class="text-danger"></span>
             </div>
+            <br/>
             <div class="form-group">
-                <input type="submit" value="Agregar" class="btn btn-primary" />
+                <input type="submit" value="Modificar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
+
 
 <div>
     <a asp-action="Index">Regresar al listado</a>
@@ -82,4 +86,3 @@ jQuery(document).ready(function ($){
 });
 </script>
 }
-

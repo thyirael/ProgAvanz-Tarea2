@@ -11,31 +11,35 @@
 <body>
     <header>
 
-            <h1 id="logo">Allan Naranjo Chacón</h1>
+            <h1 style="text-align:center;padding-bottom:2%">PROGRAMACIÓN AVANZADA EN WEB [3101]</h1>
 
-            <ul class="nav nav-pills" role="tablist">
+            <ul class="nav nav-pills" role="tablist" style="padding-left:10%;">
                 <li role="presentation">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Principal</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Principal<img src="~/images/home.png" alt="Principal" style="width:30%"></a>
                 </li>
                 <li role="presentation">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Edificios" asp-action="Index">Edificios</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Edificios" asp-action="Index">Edificios<img src="~/images/edificio.png" alt="edificio" style="width:50%"></a>
                 </li>
                 <li role="presentation">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicios" asp-action="Index">Servicios</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicios" asp-action="Index">Servicios<img src="~/images/servicios.png" alt="servicios" style="width:50%"></a>
                 </li>
                 <li role="presentation">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="ServiciosEdificio" asp-action="Index">Asignar servicios</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="ServiciosEdificio" asp-action="Index">Asignar servicios<img src="~/images/servicioxedificio.png" alt="servicios por edificio" style="width:27%"></a>
                 </li>
                 <li role="presentation">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Acerca de</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Acerca de<img src="~/images/Catalogo.png" alt="acerca de..." style="width:27%"></a>
                 </li>
             </ul>
     </header>
-    <div class="container">
+
+
+    <div class="container" style="padding-bottom:5%;border:1px solid #ccc;border-radius:20px;width:90%;overflow-y:scroll;margin-top:2%">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
+
 
     <footer class="border-top footer text-muted">
         <div class="container">

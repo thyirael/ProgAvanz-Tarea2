@@ -198,6 +198,7 @@ GO
 | Serviciosxedificio  | usp_serviciosxedificio_eliminar  | Eliminar un servicio relacionado a un edificio |
 | Serviciosxedificio  |usp_serviciosxedificio_guardar | Relacionar un servicio a un edificio|
 | Serviciosxedificio  | usp_serviciosxedificio_listar | Listar los servicios relacionados a un edificio |
+| Serviciosxedificio  | usp_serviciosxedificio_obtener | Obtener un servicio relacionado a un edificio por Id |
 | Tiposervicio  |usp_tiposervicio_listar | Listar los tipos de servicio |
 | Unidadmedida  |usp_unidadmedida_listar | Listar las unidades de medida |
 ||||
