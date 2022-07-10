@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="~/ProyAvanzWeb.Tarea2.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header style="text-align:center;">
+    <header>
 
-            <h1 id="logo">Allan Naranjo Chacón</h1>
+            <h1 style="text-align:center;padding-bottom:2%">PROGRAMACIÓN AVANZADA EN WEB [3101]</h1>
 
-            <ul class="nav nav-pills" role="tablist" style="text-align:center;">
+            <ul class="nav nav-pills" role="tablist" style="padding-left:10%;">
                 <li role="presentation">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Principal<img src="~/images/home.png" alt="Principal" style="width:30%"></a>
                 </li>
@@ -33,25 +33,10 @@
     </header>
 
 
-    <div class="container">
-        <article>
-            <section>
+    <div class="container" style="padding-bottom:5%;border:1px solid #ccc;border-radius:20px;width:90%;overflow-y:scroll;margin-top:2%">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        </section>
-        </article>
-        <aside>
-             <div class="container padding-32" id="about">
-            <h3 class="border-bottom border-light-grey padding-16">Acerca de</h3>
-            <p>Curso:
-                <br>
-                Tarea:
-                </Br>
-                Grupo:
-            </p>
-          </div>
-        </aside>
     </div>
 
 
