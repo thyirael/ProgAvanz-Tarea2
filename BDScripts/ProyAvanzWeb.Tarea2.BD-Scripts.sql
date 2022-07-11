@@ -536,9 +536,9 @@ BEGIN
                s.Estado
         FROM PROGRA_AVANZADA_TAREA_2.dbo.Servicio s WITH (NOLOCK)
             INNER JOIN PROGRA_AVANZADA_TAREA_2.dbo.TipoServicio ts WITH (NOLOCK)
-                ON ts.Id = s.Id
+                ON ts.Id = s.IdTipoServicio 
             INNER JOIN PROGRA_AVANZADA_TAREA_2.dbo.UnidadMedida um WITH (NOLOCK)
-                ON um.Id = s.Id
+                ON um.Id = s.IdUnidadMedida 
         WHERE s.Id = @id;
     END TRY
     BEGIN CATCH
