@@ -7,7 +7,7 @@
 <h1 class="mb-3 p-4 bg-info text-white rounded text-center">@ViewData["Title"]</h1>
 </div>
 <hr />
-<div class="row">
+<div class="row" >
     <div class="col-md-4">
         <form asp-action="Create" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdCanton" class="control-label"></label>
-                 @Html.DropDownList("IdCanton", new SelectList(string.Empty, "Value", "Text"), "Seleccionar un cantón", new { @class="form-control" })
+                @Html.DropDownList("IdCanton", new SelectList(string.Empty, "Value", "Text"), "Seleccionar un cantón", new { @class="form-control" })
                 <span asp-validation-for="IdCanton" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -61,6 +61,9 @@
             </div>
         </form>
     </div>
+    <div class="col-md-4">
+        <img src="~/images/edificio.png" alt="edificio" style="width:50%;margin-top:5%;margin-left:90%">
+    </div>
 </div>
 
 <div>
@@ -68,68 +71,70 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
 
-<script>
-jQuery(document).ready(function ($){
-    var now = new Date();
+    <script>
+    jQuery(document).ready(function ($){
+        var now = new Date();
 
-var day = ("0" + now.getDate()).slice(-2);
-var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
 
-var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 
-$('#FechaFinalContrato').val(today);
-$('#FechaCompra').val(today);
+    $('#FechaFinalContrato').val(today);
+    $('#FechaCompra').val(today);
 
-    $('#FechaFinalContrato').attr('disabled', true);
-    
+        $('#FechaFinalContrato').attr('disabled', true);
 
-    $('#IdProvincia').change(function(){
-        var id = $(this).find(":selected").val();
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("GetCantones", "Direccion")',
-            data: {id: parseInt(id) },
-            contentType: 'application/json; charset-utf-8',
-            success: function(data) {
-            $('#IdCanton').empty();
-            $('#IdDistrito').empty();
-                $.each(data, function(id, option){
-                    $('#IdCanton').append($('<option></option>').val(option.value).html(option.text));
-                });
-                 $('#IdCanton').change();
+
+        $('#IdProvincia').change(function(){
+            var id = $(this).find(":selected").val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetCantones", "Direccion")',
+                data: {id: parseInt(id) },
+                contentType: 'application/json; charset-utf-8',
+                success: function(data) {
+                $('#IdCanton').empty();
+                $('#IdDistrito').empty();
+                    $.each(data, function(id, option){
+                        $('#IdCanton').append($('<option></option>').val(option.value).html(option.text));
+                    });
+                     $('#IdCanton').change();
+                }
+            });
+        });
+
+        $('#IdCanton').change(function(){
+            var id = $(this).find(":selected").val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetDistritos", "Direccion")',
+                data: {id: parseInt(id) },
+                contentType: 'application/json; charset-utf-8',
+                success: function(data) {
+                $('#IdDistrito').empty();
+                    $.each(data, function(id, option){
+                        $('#IdDistrito').append($('<option></option>').val(option.value).html(option.text));
+                    });
+                }
+            });
+        });
+
+        $('#IdTipoPropiedad').change(function(){
+            var desc = $(this).find(":selected").text();
+            if (desc==='Alquilado'){
+                $('#FechaFinalContrato').removeAttr('disabled');
+            }
+            else{
+                $('#FechaFinalContrato').attr('disabled', true);
             }
         });
     });
-
-    $('#IdCanton').change(function(){
-        var id = $(this).find(":selected").val();
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("GetDistritos", "Direccion")',
-            data: {id: parseInt(id) },
-            contentType: 'application/json; charset-utf-8',
-            success: function(data) {
-            $('#IdDistrito').empty();
-                $.each(data, function(id, option){
-                    $('#IdDistrito').append($('<option></option>').val(option.value).html(option.text));
-                });
-            }
-        });
-    });
-
-    $('#IdTipoPropiedad').change(function(){
-        var desc = $(this).find(":selected").text();
-        if (desc==='Alquilado'){
-            $('#FechaFinalContrato').removeAttr('disabled');
-        }
-        else{
-            $('#FechaFinalContrato').attr('disabled', true);
-        }
-    });
-});
-</script>
+    </script>
 }
 
