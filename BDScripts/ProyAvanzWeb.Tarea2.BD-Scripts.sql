@@ -599,6 +599,7 @@ BEGIN
             WHERE Id = @id
         )
         BEGIN
+            --ACTUALIZA
             IF EXISTS
             (
                 SELECT 1
@@ -607,7 +608,24 @@ BEGIN
                       AND IdServicio = @idServicio
             )
             BEGIN
-                SELECT @salida = -1;
+                IF EXISTS
+                (
+                    SELECT 1
+                    FROM PROGRA_AVANZADA_TAREA_2.dbo.ServiciosXEdificio WITH (NOLOCK)
+                    WHERE IdEdificio = @idEdificio
+                          AND IdServicio = @idServicio
+                          AND Id = @id
+                )
+                BEGIN
+                    UPDATE PROGRA_AVANZADA_TAREA_2.dbo.ServiciosXEdificio
+                    SET FechaCorte = @fechaCorte,
+                        Consumo = @consumo
+                    WHERE Id = @id;
+                END;
+                ELSE
+                BEGIN
+                    SELECT @salida = -1;
+                END;
             END;
             ELSE
             BEGIN
@@ -621,6 +639,7 @@ BEGIN
         END;
         ELSE
         BEGIN
+            --INSERT
             IF EXISTS
             (
                 SELECT 1
@@ -653,7 +672,7 @@ BEGIN
                ERROR_LINE() AS ErrorLine,
                ERROR_MESSAGE() AS ErrorMessage;
     END CATCH;
-END;
+END
 GO
 
 -------------------------------------------------------------------------------------------------------------
@@ -1388,5 +1407,32 @@ VALUES
 ('Watts', 1),
 ('Litros', 1),
 ('Minutos', 1);
+
+--###########################################################################################################
+
+--###########################################################################################################
+-------------------------------------------------------------------------------------------------------------
+-- INSERTAR DATOS DE EJEMPLO
+-------------------------------------------------------------------------------------------------------------
+
+INSERT INTO dbo.Edificio ([NombreEdificio], [Capacidad], [FechaCompra], [IdProvincia], [IdCanton], [IdDistrito], [IdTipoPropiedad], [FechaFinalContrato], [Estado])
+VALUES
+( 'prueba', 2, N'2022-07-20T00:00:00', 1, 1, 1, 1, N'1900-01-01T00:00:00', 1 ), 
+( 'Edificio2', 1, N'2022-07-27T00:00:00', 1, 18, 100, 2, N'2022-07-27T00:00:00', 1 )
+
+
+-------------------------------------------------------------------------------------------------------------
+
+INSERT INTO dbo.Servicio ([NombreServicio], [IdTipoServicio], [IdUnidadMedida], [Empresa], [Estado])
+VALUES
+( 'Agua', 1, 3, 'Acueductos', 1 )
+
+
+-------------------------------------------------------------------------------------------------------------
+
+INSERT INTO dbo.ServiciosXEdificio ([IdEdificio], [IdServicio], [FechaCorte], [Consumo])
+VALUES
+( 2, 1, N'2022-07-12T00:00:00', 2200 ), 
+( 1, 1, N'2022-07-21T00:00:00', 100 )
 
 --###########################################################################################################
