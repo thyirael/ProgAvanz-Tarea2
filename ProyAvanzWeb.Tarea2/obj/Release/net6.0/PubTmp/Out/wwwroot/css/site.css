@@ -1,0 +1,133 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.content,
+.auto {
+    margin-left: auto;
+    margin-right: auto
+}
+
+.padding {
+    padding: 8px 16px !important
+}
+
+.container:after,
+.container:before {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.padding-32 {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important
+}
+
+.row-padding:after,
+.row-padding:before {
+    content: "";
+    display: table;
+    clear: both
+}
+.row-padding {
+display: flex
+}
+
+.row-padding,
+.row-padding > .half,
+.row-padding > .third,
+.row-padding > .twothird,
+.row-padding > .threequarter,
+.row-padding > .quarter,
+.row-padding > .col {
+    padding: 0 8px 
+}
+
+.tooltip,
+.display-container {
+    position: relative;
+
+}
+
+    .display-container:hover .display-hover {
+        display: block
+    }
+
+    .display-container:hover span.display-hover {
+        display: inline-block
+    }
+
+.black,
+.hover-black:hover {
+    color: #fff !important;
+    background-color: #000 !important
+}
+
+.text-black,
+.hover-text-black:hover {
+    color: #000 !important
+}
+
+.black {
+    border-radius: 10px !important
+}
+
+.black,
+.hover-black:hover {
+    color: #fff !important;
+    background-color: #000 !important
+}
+
+.container,
+.panel {
+    padding: 0.01em 16px
+}
+
+.panel {
+    margin-top: 16px;
+    margin-bottom: 16px
+}
+
+.display-topleft {
+    position: absolute;
+    left: 0;
+    top: 0
+}
+
+.text-green,
+.hover-text-green:hover {
+    color: #4CAF50 !important
+}
+
+.text-light-green,
+.hover-text-light-green:hover {
+    color: #8bc34a !important
+}
+
+.margin-bottom {
+    margin-bottom: 16px !important
+}
+
+.margin-bottom {
+    margin-bottom: 16px !important
+}
+
+.display-hover {
+    display: none
+}
