@@ -124,7 +124,7 @@ namespace ProyAvanzWeb.Tarea2.Controllers
                     sqlCmd.Parameters.AddWithValue("idCanton", edificio.IdCanton);
                     sqlCmd.Parameters.AddWithValue("idDistrito", edificio.IdDistrito);
                     sqlCmd.Parameters.AddWithValue("idTipoPropiedad", edificio.IdTipoPropiedad);
-                    sqlCmd.Parameters.AddWithValue("fechaFinalContrato", edificio.FechaFinalContrato);
+                    sqlCmd.Parameters.AddWithValue("fechaFinalContrato", string.IsNullOrEmpty(edificio.FechaFinalContrato.ToString()) ? DateTime.Parse("01/01/1900") : edificio.FechaFinalContrato);
                     sqlCmd.Parameters.AddWithValue("estado", edificio.Estado);
                     sqlCmd.Parameters.AddWithValue("salida", 0);
                     sqlCmd.ExecuteNonQuery();

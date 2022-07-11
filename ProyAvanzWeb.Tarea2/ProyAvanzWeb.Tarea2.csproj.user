@@ -17,5 +17,6 @@
     <WebStackScaffolding_DbContextTypeFullName>ProyAvanzWeb.Tarea2.Data.ProyAvanzWebTarea2Context</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>D:\UNED\Licenciatura\II Cuatrimestre 2022\[3101] - Programación avanzada en web\Tarea2\DEV\Site\ProyAvanzWeb.Tarea2\ProgAvanz-Tarea2\ProyAvanzWeb.Tarea2\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>
